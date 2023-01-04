@@ -1,9 +1,18 @@
+import PropTypes from 'prop-types';
+
+import {
+  Form,
+  FormLabel,
+  FormInput,
+  AddContactBtn,
+} from './ContactForm.styled';
+
 export default function ContactForm({ submitHandler, handleChange }) {
   return (
-    <form onSubmit={submitHandler}>
-      <label>
+    <Form onSubmit={submitHandler}>
+      <FormLabel>
         Name
-        <input
+        <FormInput
           type="text"
           name="name"
           pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
@@ -11,10 +20,10 @@ export default function ContactForm({ submitHandler, handleChange }) {
           onChange={handleChange}
           required
         />
-      </label>
-      <label>
+      </FormLabel>
+      <FormLabel>
         Phone
-        <input
+        <FormInput
           type="tel"
           name="number"
           pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
@@ -22,8 +31,13 @@ export default function ContactForm({ submitHandler, handleChange }) {
           onChange={handleChange}
           required
         />
-      </label>
-      <button type="submit">Add contact</button>
-    </form>
+      </FormLabel>
+      <AddContactBtn type="submit">Add contact</AddContactBtn>
+    </Form>
   );
 }
+
+ContactForm.propTypes = {
+  submitHandler: PropTypes.func,
+  handleChange: PropTypes.func,
+};

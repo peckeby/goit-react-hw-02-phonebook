@@ -1,8 +1,14 @@
+import PropTypes from 'prop-types';
+import {
+  FormLabel,
+  FormInput,
+} from 'components/ContactForm/ContactForm.styled';
+
 export default function SearchBar({ filter, handleChange }) {
   return (
-    <label>
+    <FormLabel>
       Find contacts by name
-      <input
+      <FormInput
         type="search"
         name="filter"
         pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
@@ -10,6 +16,11 @@ export default function SearchBar({ filter, handleChange }) {
         value={filter}
         onChange={handleChange}
       />
-    </label>
+    </FormLabel>
   );
 }
+
+SearchBar.propTypes = {
+  filter: PropTypes.string,
+  handleChange: PropTypes.func,
+};

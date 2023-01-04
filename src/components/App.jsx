@@ -1,7 +1,10 @@
 import { Component } from 'react';
-import ContactForm from './ContactForm/ContactForm';
 import { nanoid } from 'nanoid';
 
+import { GlobalStyle } from './GlobalStyles';
+import { Container } from './Container/Container.styled';
+
+import ContactForm from './ContactForm/ContactForm';
 import ContactList from './ContactList/ContactList';
 import Section from './Section/Section';
 import SearchBar from './SearchBar/SearchBar';
@@ -15,8 +18,9 @@ export class App extends Component {
   state = { ...INITIAL_STATE };
 
   fiterChange = (contacts, filter) => {
+    console.log(filter);
     const newContacts = contacts.filter(contact => {
-      return contact.name.toLowerCase() === filter.toLowerCase();
+      return contact.name.toLowerCase().includes(filter.toLowerCase());
     });
     return newContacts;
   };
@@ -31,9 +35,9 @@ export class App extends Component {
       contacts: [
         ...this.state.contacts,
         {
-          name: `${name}`,
+          name,
           id: nanoid(),
-          tel: `${tel}`,
+          tel,
         },
       ],
     });
@@ -67,30 +71,33 @@ export class App extends Component {
 
     return (
       <>
-        <Section title="Phonebook"></Section>
-        <Section title="Contacts">
-          <ContactForm
-            submitHandler={this.handleSubmit}
-            handleChange={this.handleChange}
-          ></ContactForm>
-          {contacts.length > 0 && (
-            <SearchBar
-              filter={filter}
+        <Container>
+          <Section title="Phonebook"></Section>
+          <Section title="Contacts">
+            <ContactForm
+              submitHandler={this.handleSubmit}
               handleChange={this.handleChange}
-            ></SearchBar>
-          )}
-          {filter.length > 0 ? (
-            <ContactList
-              contacts={this.fiterChange(contacts, filter)}
-              handleDelete={this.handleDelete}
-            ></ContactList>
-          ) : (
-            <ContactList
-              contacts={contacts}
-              handleDelete={this.handleDelete}
-            ></ContactList>
-          )}
-        </Section>
+            ></ContactForm>
+            {contacts.length > 0 && (
+              <SearchBar
+                filter={filter}
+                handleChange={this.handleChange}
+              ></SearchBar>
+            )}
+            {filter.length > 0 ? (
+              <ContactList
+                contacts={this.fiterChange(contacts, filter)}
+                handleDelete={this.handleDelete}
+              ></ContactList>
+            ) : (
+              <ContactList
+                contacts={contacts}
+                handleDelete={this.handleDelete}
+              ></ContactList>
+            )}
+          </Section>
+        </Container>
+        <GlobalStyle />
       </>
     );
   }
